@@ -1,0 +1,28 @@
+
+All dra quantities have cos(dec) included. Any delta-position quantities are in arcseconds. Absolute positions are in decimal degrees.
+
+All files in “_shifts” directories are also present in “_all” directories; there are additional files in “_all” directories that are not present in “_shift” directories.
+
+The files:
+
+iciiXX_YYY.shifts: contains imagename, dra, ddec, ra, dec
+dra and ddec are defined as (orbit_YYY_position_at_time - orbit_YYY_position_at_midtime) - (guiding_orbit_position_at_time - guiding_orbit_position_at_midtime), etc.
+ra and dec are the calculated absolute positions of the orbit that generated these offsets at given time.
+
+iciiXX_celestial.shifts: imagename, estimated JD, dra_guiding_orbit, ddec_guiding_orbit
+dra_guiding_orbit and ddec_guiding_orbit are the positional offsets of the guiding orbit, defined as position_at_time - position_at_midtime.
+You can remove these offsets and you should be able to stack the stars.
+
+iciiXX_all.shifts: similar information to iciiXX_YYY.shifts, but in one file.
+shift_index, filename, dra, ddec, ra, dec.
+
+iciiXX_iciiYY_all.shear: summary information for connecting the two visits.
+shift_index, max_dra_in_a_visit, max_ddec_in_a_visit, dra_between_midtimes, ddec_between_midtimes
+
+The max positional offsets in a visit are the difference in the dra and ddec between the last and first frames in the visit that had the largest total shear (probably the longest visit duration).
+
+The positional difference between midtimes is the difference in the difference between position of the shift orbit in the second visit midtime and the position of the shift orbit in the first visit midtime. If the two visits are shifted and stacked onto the WCS of their respective mid-time images, then this offset will be the offset to the location in visit B of a KBO detected seen at a given position in visit A.
+
+There is also a png figure, showing the adopted rate/orbit grid. I’m using a hybrid hexgrid to select the shift orbit.
+
+The .orbits file contains [index, keplerian orbit elements] for the shift-orbits. The orbital elements are drawn from Jean-Marc’s files. Index 000 should always be the nominal guiding orbit.
